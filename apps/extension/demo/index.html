@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Muty</title>
+    <link rel="stylesheet" href="sample.css" />
+    <link rel="stylesheet" href="content.css" />
+    
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <p>Muty</p>
+      </div>
+      <a href="#install">Install in Chrome</a>
+    </header>
+    <main>
+      <section class="intro">
+        <h1>Keep the wrong videos out of the feed.</h1>
+        <p>
+          Add a word or a phrase. Titles that contain it disappear. GTA 6 is already on the list, so those videos are gone from this sample — and, after you install the extension, from YouTube, LinkedIn, and Twitter.
+        </p>
+      </section>
+      <div class="layout">
+        <section class="feed-wrap" aria-label="Sample feed">
+          <div class="feed-bar">
+            <p id="count" role="status">Filtering the sample…</p>
+            <button id="toggle-show" type="button">Show hidden</button>
+          </div>
+          <p id="feed-empty" class="feed-empty" hidden>Nothing in this sample survives the list. Remove a word, or show the hidden ones.</p>
+          <div id="feed">
+            <ytd-rich-item-renderer data-sample>
+              <a class="block" href="#install">
+                <span class="thumb tone-a" aria-hidden="true"></span>
+                <span class="meta">
+                  <span class="ytLockupMetadataViewModelTitle title">GTA 6 ending explained</span>
+                  <span class="byline">GameNews · 1.2M views</span>
+                </span>
+              </a>
+            </ytd-rich-item-renderer>
+            <ytd-video-renderer data-sample>
+              <a class="block" href="#install">
+                <span class="thumb tone-b" aria-hidden="true"></span>
+                <span class="meta">
+                  <span id="video-title" class="title">GTA6 map, fully walked</span>
+                  <span class="byline">Map Desk · 640K views</span>
+                </span>
+              </a>
+            </ytd-video-renderer>
+            <ytd-rich-item-renderer data-sample>
+              <a class="block" href="#install">
+                <span class="thumb tone-c" aria-hidden="true"></span>
+                <span class="meta">
+                  <span class="ytLockupMetadataViewModelTitle title">Grand Theft Auto VI — opening hour</span>
+                  <span class="byline">Night Shift · 2 days ago</span>
+                </span>
+              </a>
+            </ytd-rich-item-renderer>
+            <ytd-rich-item-renderer data-sample>
+              <a class="block" href="#install">
+                <span class="thumb tone-d" aria-hidden="true"></span>
+                <span class="meta">
+                  <span id="video-title" class="title">GTA-6 leak reaction</span>
+                  <span class="byline">Late Upload · 88K views</span>
+                </span>
+              </a>
+            </ytd-rich-item-renderer>
+            <ytd-rich-shelf-renderer data-sample-shelf>
+              <h2>Shorts</h2>
+              <div class="shorts">
+                <ytm-shorts-lockup-view-model data-sample>
+                  <span class="short-thumb tone-e" aria-hidden="true"></span>
+                  <h3 class="shortsLockupViewModelHostMetadataTitle">GTA VI in 20 seconds</h3>
+                </ytm-shorts-lockup-view-model>
+                <ytm-shorts-lockup-view-model data-sample>
+                  <span class="short-thumb tone-f" aria-hidden="true"></span>
+                  <h3 class="shortsLockupViewModelHostMetadataTitle">Rain on the window</h3>
+                </ytm-shorts-lockup-view-model>
+              </div>
+            </ytd-rich-shelf-renderer>
+            <ytd-rich-item-renderer data-sample>
+              <a class="block" href="#install">
+                <span class="thumb tone-g" aria-hidden="true"></span>
+                <span class="meta">
+                  <span id="video-title" class="title">I replayed GTA 5</span>
+                  <span class="byline">Sunday Drive · 9 years later</span>
+                </span>
+              </a>
+            </ytd-rich-item-renderer>
+            <ytd-rich-item-renderer data-sample>
+              <a class="block" href="#install">
+                <span class="thumb tone-h" aria-hidden="true"></span>
+                <span class="meta">
+                  <span id="video-title" class="title">The GTA video essay</span>
+                  <span class="byline">About the radio, not the plot</span>
+                </span>
+              </a>
+            </ytd-rich-item-renderer>
+            <ytd-rich-item-renderer data-sample>
+              <a class="block" href="#install">
+                <span class="thumb tone-i" aria-hidden="true"></span>
+                <span class="meta">
+                  <span id="video-title" class="title">Sourdough in a cold kitchen</span>
+                  <span class="byline">Weeknight Oven · 12 minutes</span>
+                </span>
+              </a>
+            </ytd-rich-item-renderer>
+            <ytd-compact-video-renderer data-sample>
+              <div class="block">
+                <span class="thumb tone-j" aria-hidden="true"></span>
+                <span class="meta">
+                  <span id="video-title" class="title">You will not believe this</span>
+                  <ytd-channel-name><a href="#install">GTA 6 Daily</a></ytd-channel-name>
+                </span>
+              </div>
+            </ytd-compact-video-renderer>
+            <ytd-backstage-post-renderer data-sample>
+              <div class="post">
+                <p class="byline">Channel post</p>
+                <p id="content-text">Just watched the GTA 6 ending. No notes, just shock.</p>
+              </div>
+            </ytd-backstage-post-renderer>
+          </div>
+        </section>
+        <aside class="editor" aria-label="Word list">
+          <form id="add-form">
+            <label for="phrase">Hide a title that contains</label>
+            <div class="add-row">
+              <input id="phrase" name="phrase" maxlength="80" placeholder="sourdough" autocomplete="off" />
+              <button type="submit">Add</button>
+            </div>
+            <p id="hint" aria-live="polite">“gta 6” also matches GTA6 and GTA-6. It does not match GTA 5.</p>
+          </form>
+          <ul id="keywords"></ul>
+          <p id="empty" class="empty" hidden>No words yet. Every video in the sample stays visible.</p>
+          <button id="restore-gta" class="text-button" type="button" hidden>Add the GTA 6 words</button>
+          <fieldset>
+            <label><input id="enabled" type="checkbox" /> Filtering on</label>
+            <label><input id="match-channel" type="checkbox" /> Check channel names too</label>
+          </fieldset>
+          <p class="fine">Turn on channel names and “GTA 6 Daily” disappears even though the title doesn’t say it. Covering a video you open, and skipping Shorts, happen on YouTube.</p>
+        </aside>
+      </div>
+      <section id="install" class="install">
+        <h2>Install it in Chrome</h2>
+        <ol>
+          <li>Open <kbd>chrome://extensions</kbd>. Edge and Brave have the same page.</li>
+          <li>Turn on Developer mode.</li>
+          <li>Choose Load unpacked and select <kbd>apps/extension/dist</kbd>.</li>
+          <li>Open YouTube, LinkedIn, or Twitter and refresh the tab. The list is already filled with GTA 6.</li>
+        </ol>
+        <p>On YouTube, Home, Search, Subscriptions, Shorts shelves, and the sidebar are filtered. A matching video you open stays covered until you play it. LinkedIn and Twitter hide the matching post. The word list stays in this browser. Nothing is uploaded.</p>
+      </section>
+    </main>
+    <script src="demo.js"></script>
+  </body>
+</html>

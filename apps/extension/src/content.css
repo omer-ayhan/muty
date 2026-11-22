@@ -1,0 +1,93 @@
+.spoiler-mute-hidden {
+  display: none !important;
+}
+
+.spoiler-mute-ui,
+.spoiler-mute-ui * {
+  box-sizing: border-box !important;
+  letter-spacing: normal;
+}
+
+.spoiler-mute-cover button:focus-visible {
+  outline: 2px solid #e7a04a !important;
+  outline-offset: 2px !important;
+}
+
+.spoiler-mute-cover {
+  position: fixed !important;
+  z-index: 2147483646 !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+  background: #14120f !important;
+  color: #f3ecdf !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.spoiler-mute-cover .sheet {
+  width: min(440px, 100%) !important;
+}
+
+.spoiler-mute-cover .kicker {
+  margin: 0 0 10px !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 12px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #e7a04a !important;
+}
+
+.spoiler-mute-cover h2 {
+  margin: 0 !important;
+  font-family: "Iowan Old Style", Palatino, Georgia, serif !important;
+  font-size: 34px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+  color: #f3ecdf !important;
+}
+
+.spoiler-mute-cover p.note {
+  margin: 12px 0 0 !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+  color: #d9d0c2 !important;
+}
+
+.spoiler-mute-cover .actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-top: 22px !important;
+}
+
+.spoiler-mute-cover button {
+  border-radius: 999px !important;
+  padding: 10px 16px !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+.spoiler-mute-cover button.primary {
+  border: 0 !important;
+  background: #f3ecdf !important;
+  color: #1c1915 !important;
+}
+
+.spoiler-mute-cover button.quiet {
+  border: 1px solid #8a8174 !important;
+  background: transparent !important;
+  color: #f3ecdf !important;
+}
+
+@media (max-width: 540px) {
+  .spoiler-mute-cover h2 {
+    font-size: 28px !important;
+  }
+}

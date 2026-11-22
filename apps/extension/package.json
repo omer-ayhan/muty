@@ -1,0 +1,20 @@
+{
+  "name": "@spoiler-mute/extension",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@spoiler-mute/adapters": "*",
+    "@spoiler-mute/core": "*"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.31",
+    "esbuild": "^0.25.12",
+    "linkedom": "^0.18.12"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test src/sample.test.ts"
+  }
+}

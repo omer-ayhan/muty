@@ -1,0 +1,19 @@
+{
+  "name": "@spoiler-mute/adapters",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@spoiler-mute/core": "*"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.12"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test src/registry.test.ts src/youtube/cards.test.ts src/linkedin/feed.test.ts src/twitter/feed.test.ts"
+  }
+}

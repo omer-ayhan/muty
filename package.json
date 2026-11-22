@@ -1,0 +1,20 @@
+{
+  "name": "spoiler-mute",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "npm@11.20.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "turbo": "^2.6.1",
+    "typescript": "^5.9.3"
+  }
+}

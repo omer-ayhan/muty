@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Muty</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <h1>Muty</h1>
+      </div>
+      <button id="enabled" class="switch" type="button" role="switch" aria-checked="true" aria-label="Filtering on"></button>
+    </header>
+    <p id="status" role="status">Loading your list…</p>
+    <form id="add-form">
+      <label for="phrase">Hide a title that contains</label>
+      <div class="add-row">
+        <input id="phrase" name="phrase" maxlength="80" placeholder="gta 6 ending" autocomplete="off" spellcheck="true" />
+        <button type="submit">Add</button>
+      </div>
+      <p id="hint" class="hint" aria-live="polite">Spaces and hyphens are optional, so “gta 6” also catches GTA6 and GTA-6.</p>
+    </form>
+    <ul id="keywords"></ul>
+    <p id="empty" class="empty" hidden>No words yet. Every video stays visible.</p>
+    <button id="restore-gta" class="text-button" type="button" hidden>Add the GTA 6 words</button>
+    <fieldset>
+      <legend>Platforms</legend>
+      <div id="platforms"></div>
+      <p class="note">YouTube, LinkedIn, and Twitter.</p>
+    </fieldset>
+    <fieldset>
+      <legend>Also</legend>
+      <label><input id="match-channel" type="checkbox" /> Check YouTube and LinkedIn names</label>
+      <label><input id="match-twitter-name" type="checkbox" /> Check Twitter account names</label>
+      <label><input id="cover-watch" type="checkbox" /> Cover a matching video I open on YouTube</label>
+      <label><input id="skip-shorts" type="checkbox" /> Skip matching YouTube Shorts</label>
+    </fieldset>
+    <fieldset>
+      <legend>Exclude URLs</legend>
+      <form id="exclude-form">
+        <label for="exclude-url">Leave a page alone when its address contains</label>
+        <div class="add-row">
+          <input id="exclude-url" name="exclude-url" type="text" maxlength="2000" placeholder="linkedin.com/search" autocomplete="off" spellcheck="false" />
+          <button type="submit">Add</button>
+        </div>
+        <p id="exclude-hint" class="hint" aria-live="polite">Part of an address is enough. A page that contains it is not filtered.</p>
+      </form>
+      <ul id="excluded-urls"></ul>
+      <p id="exclude-empty" class="empty" hidden>No excluded URLs.</p>
+    </fieldset>
+    <footer>Turn a platform off and that site stays as it is. The list stays in this browser.</footer>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "manifest_version": 3,
+  "name": "Muty",
+  "short_name": "Muty",
+  "version": "1.1.0",
+  "description": "Hides matching videos and posts. The icon badge shows how many are hidden on this tab. Open Muty to see the same count.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://m.youtube.com/*",
+    "https://www.linkedin.com/*",
+    "https://*.linkedin.com/*",
+    "https://linkedin.com/*",
+    "https://twitter.com/*",
+    "https://x.com/*",
+    "https://www.twitter.com/*",
+    "https://www.x.com/*",
+    "https://*.twitter.com/*",
+    "https://*.x.com/*"
+  ],
+  "action": {
+    "default_title": "Muty",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://m.youtube.com/*",
+        "https://www.linkedin.com/*",
+        "https://*.linkedin.com/*",
+        "https://linkedin.com/*",
+        "https://twitter.com/*",
+        "https://x.com/*",
+        "https://www.twitter.com/*",
+        "https://www.x.com/*",
+        "https://*.twitter.com/*",
+        "https://*.x.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "options_ui": {
+    "page": "popup.html",
+    "open_in_tab": true
+  }
+}
