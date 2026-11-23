@@ -1,4 +1,4 @@
-export const PLATFORM_IDS = ['youtube', 'linkedin', 'twitter'] as const;
+export const PLATFORM_IDS = ['youtube', 'linkedin', 'twitter', 'kick', 'twitch'] as const;
 
 export type PlatformId = (typeof PLATFORM_IDS)[number];
 
@@ -10,7 +10,9 @@ export interface PlatformInfo {
 export const PLATFORM_CATALOG: readonly PlatformInfo[] = [
   { id: 'youtube', label: 'YouTube' },
   { id: 'linkedin', label: 'LinkedIn' },
-  { id: 'twitter', label: 'Twitter' },
+  { id: 'twitter', label: 'X' },
+  { id: 'kick', label: 'Kick' },
+  { id: 'twitch', label: 'Twitch' },
 ];
 
 export function isPlatformId(value: string): value is PlatformId {
@@ -18,6 +20,8 @@ export function isPlatformId(value: string): value is PlatformId {
     case 'youtube':
     case 'linkedin':
     case 'twitter':
+    case 'kick':
+    case 'twitch':
       return true;
     default:
       return false;
@@ -31,7 +35,11 @@ export function platformLabel(id: PlatformId): string {
     case 'linkedin':
       return 'LinkedIn';
     case 'twitter':
-      return 'Twitter';
+      return 'X';
+    case 'kick':
+      return 'Kick';
+    case 'twitch':
+      return 'Twitch';
     default: {
       const unknown: never = id;
       return unknown;

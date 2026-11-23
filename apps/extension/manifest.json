@@ -16,7 +16,17 @@
     "https://www.twitter.com/*",
     "https://www.x.com/*",
     "https://*.twitter.com/*",
-    "https://*.x.com/*"
+    "https://*.x.com/*",
+    "https://kick.com/*",
+    "https://www.kick.com/*",
+    "https://*.kick.com/*",
+    "https://www.twitch.tv/*",
+    "https://twitch.tv/*",
+    "https://m.twitch.tv/*",
+    "https://*.twitch.tv/*",
+    "https://www.twitch.com/*",
+    "https://twitch.com/*",
+    "https://*.twitch.com/*"
   ],
   "action": {
     "default_title": "Muty",
@@ -49,7 +59,17 @@
         "https://www.twitter.com/*",
         "https://www.x.com/*",
         "https://*.twitter.com/*",
-        "https://*.x.com/*"
+        "https://*.x.com/*",
+        "https://kick.com/*",
+        "https://www.kick.com/*",
+        "https://*.kick.com/*",
+        "https://www.twitch.tv/*",
+        "https://twitch.tv/*",
+        "https://m.twitch.tv/*",
+        "https://*.twitch.tv/*",
+        "https://www.twitch.com/*",
+        "https://twitch.com/*",
+        "https://*.twitch.com/*"
       ],
       "js": ["content.js"],
       "css": ["content.css"],

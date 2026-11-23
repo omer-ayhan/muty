@@ -9,7 +9,7 @@ const ACTOR = ['[data-testid="User-Name"]'];
 export function createTwitterAdapter(): PlatformAdapter {
   return {
     id: 'twitter',
-    label: 'Twitter',
+    label: 'X',
     matches: [
       'https://twitter.com/*',
       'https://x.com/*',

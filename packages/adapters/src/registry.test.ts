@@ -16,5 +16,10 @@ test('a url picks the matching adapter', () => {
   assert.equal(adapterFor('https://www.linkedin.com/feed/')?.id, 'linkedin');
   assert.equal(adapterFor('https://x.com/home')?.id, 'twitter');
   assert.equal(adapterFor('https://twitter.com/home')?.id, 'twitter');
+  assert.equal(adapterFor('https://kick.com/browse')?.id, 'kick');
+  assert.equal(adapterFor('https://www.kick.com/3mr')?.id, 'kick');
+  assert.equal(adapterFor('https://www.twitch.tv/directory/all')?.id, 'twitch');
+  assert.equal(adapterFor('https://twitch.tv/caseoh_')?.id, 'twitch');
+  assert.equal(adapterFor('https://www.twitch.com/')?.id, 'twitch');
   assert.equal(adapterFor('https://example.com/'), null);
 });

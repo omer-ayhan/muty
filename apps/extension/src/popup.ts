@@ -96,7 +96,7 @@ function statusText(): string {
     case 'preview':
       return 'Your list is saved in this browser.';
     case 'elsewhere':
-      return 'Open YouTube, LinkedIn, or Twitter. This list is ready.';
+      return 'Open YouTube, LinkedIn, X, Kick, or Twitch. This list is ready.';
     case 'refresh':
       return `Refresh the ${page.label} tab to start filtering.`;
     case 'active': {
@@ -203,6 +203,16 @@ function platformIcon(id: PlatformId): SVGSVGElement {
     case 'twitter':
       return svg([
         '<path fill="#111" d="M14.7 3h2.6l-5.7 6.5L18.8 21h-4.8l-3.8-5-4.3 5H3.3l6.1-7L3 3h4.9l3.4 4.6L14.7 3zm-1 16.2h1.5L7.4 4.7H5.8l7.9 14.5z"/>',
+      ]);
+    case 'kick':
+      return svg([
+        '<rect width="24" height="24" rx="5" fill="#53fc18"/>',
+        '<path fill="#111" d="M7.2 5.2h2.6v5.1l4.2-5.1h3.1l-5.2 6.1 5.6 7.5h-3.2l-4.2-5.8v5.8H7.2V5.2z"/>',
+      ]);
+    case 'twitch':
+      return svg([
+        '<path fill="#9146ff" d="M6 2 2.4 5.6v12.8h4.3V22l3.6-3.6h2.8L20.6 12V2H6zm12.1 9.3-2.9 2.9h-2.8l-2.5 2.5v-2.5H6.4V3.4h11.7v7.9z"/>',
+        '<path fill="#fff" d="M14.2 6.2h-1.4v4.3h1.4V6.2zm-3.8 0H9v4.3h1.4V6.2z"/>',
       ]);
     default: {
       const unknown: never = id;

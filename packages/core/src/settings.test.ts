@@ -14,7 +14,7 @@ import {
   urlExcluded,
 } from './settings.ts';
 
-const allOn = { youtube: true, linkedin: true, twitter: true };
+const allOn = { youtube: true, linkedin: true, twitter: true, kick: true, twitch: true };
 
 test('missing settings fall back to the GTA 6 list', () => {
   const settings = normalizeSettings(null);
@@ -84,8 +84,10 @@ test('a known platform stays on unless it is turned off', () => {
   assert.equal(fresh.platforms.youtube, true);
   assert.equal(fresh.platforms.linkedin, true);
   assert.equal(fresh.platforms.twitter, true);
+  assert.equal(fresh.platforms.kick, true);
+  assert.equal(fresh.platforms.twitch, true);
   const off = normalizeSettings({ platforms: { youtube: false, vimeo: true } });
-  assert.deepEqual(off.platforms, { youtube: false, linkedin: true, twitter: true });
+  assert.deepEqual(off.platforms, { youtube: false, linkedin: true, twitter: true, kick: true, twitch: true });
   assert.equal(platformEnabled(off, 'youtube'), false);
   const on = setPlatform(off, 'youtube', true);
   assert.equal(on.platforms.youtube, true);
