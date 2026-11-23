@@ -233,6 +233,16 @@ fieldset {
   cursor: pointer;
 }
 
+.open-tab {
+  display: block;
+  margin: -6px 0 14px;
+  font-size: 13px;
+}
+
+html.is-consent .open-tab {
+  display: none;
+}
+
 fieldset {
   margin: 16px 0 0;
   padding: 12px 0 0;

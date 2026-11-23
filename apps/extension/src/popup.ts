@@ -38,6 +38,7 @@ const skipShorts = must<HTMLInputElement>('#skip-shorts');
 const platformBox = must<HTMLElement>('#platforms');
 const agreement = must<HTMLElement>('#agreement');
 const agreeButton = must<HTMLButtonElement>('#agree');
+const openTab = must<HTMLButtonElement>('#open-tab');
 const defaultHint = hint.textContent ?? '';
 
 type PageState =
@@ -423,7 +424,27 @@ if (globalThis.chrome?.runtime?.onMessage) {
 }
 
 const popupViews = chrome.extension?.getViews?.({ type: 'popup' }) ?? [];
-if (popupViews.includes(window)) document.documentElement.classList.add('is-popup');
+const toolbarPopup = popupViews.includes(window);
+if (toolbarPopup) document.documentElement.classList.add('is-popup');
+
+function alreadyDetailsTab(): boolean {
+  if (consentTab || toolbarPopup) return false;
+  try {
+    return window.top === window;
+  } catch {
+    return false;
+  }
+}
+
+openTab.hidden = alreadyDetailsTab();
+openTab.addEventListener('click', () => {
+  const runtime = globalThis.chrome?.runtime;
+  if (runtime?.sendMessage) {
+    void runtime.sendMessage({ type: 'muty:open-details' });
+    return;
+  }
+  window.open('popup.html', '_blank');
+});
 
 for (const link of document.querySelectorAll<HTMLAnchorElement>('a.privacy-policy')) {
   link.href = PRIVACY_POLICY_URL;

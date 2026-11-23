@@ -8,6 +8,8 @@ function hiddenTitle(hidden: number): string {
 
 let consentTabId: number | null = null;
 let consentTabOpening = false;
+let detailsTabId: number | null = null;
+let detailsTabOpening = false;
 
 function createConsentTab(): void {
   if (consentTabOpening) return;
@@ -39,8 +41,39 @@ function openConsentTab(): void {
   });
 }
 
+function createDetailsTab(): void {
+  if (detailsTabOpening) return;
+  detailsTabOpening = true;
+  chrome.tabs.create(
+    {
+      url: chrome.runtime.getURL('popup.html'),
+      active: true,
+    },
+    (created) => {
+      detailsTabOpening = false;
+      detailsTabId = created?.id ?? null;
+    },
+  );
+}
+
+function openDetailsTab(): void {
+  if (detailsTabId === null) {
+    createDetailsTab();
+    return;
+  }
+  chrome.tabs.update(detailsTabId, { active: true }, (tab) => {
+    if (chrome.runtime.lastError || !tab) {
+      detailsTabId = null;
+      createDetailsTab();
+      return;
+    }
+    chrome.windows.update(tab.windowId, { focused: true });
+  });
+}
+
 chrome.tabs.onRemoved.addListener((id) => {
   if (id === consentTabId) consentTabId = null;
+  if (id === detailsTabId) detailsTabId = null;
 });
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -52,6 +85,10 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message?.type === 'muty:open-details') {
+    openDetailsTab();
+    return;
+  }
   if (message?.type === 'muty:open-consent') {
     chrome.storage.local.get('settings', (data) => {
       const settings = normalizeSettings(data.settings);
