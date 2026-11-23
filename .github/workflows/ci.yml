@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [development, main]
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+
+  from-development:
+    name: from-development
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Only development may merge into main
+        run: |
+          if [ "${{ github.head_ref }}" != "development" ]; then
+            echo "main only accepts a pull request from development."
+            exit 1
+          fi
