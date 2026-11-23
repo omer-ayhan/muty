@@ -46,6 +46,26 @@ The toolbar badge counts how many items are hidden on that tab. Hover the icon, 
 
 Remove a phrase if you still want those videos. A short single word, like `gta` on its own, hides every title that uses it.
 
+## Chrome Web Store
+
+Category: Productivity. Homepage: the address of this repository. Privacy policy: [PRIVACY.md](PRIVACY.md).
+
+The package name and the short description are already set for search. Paste the long description into the store listing. Use the same facts. Muty is not affiliated with YouTube, LinkedIn, X, Kick, or Twitch.
+
+Hide videos and posts when the title, description, category, or chat contains words you choose. YouTube, LinkedIn, X, Kick, and Twitch are included. The list stays in this browser. Nothing is sent anywhere.
+
+GTA 6 is on the list already, so trailers, leaks, endings, and reaction videos stay out of the feed until you remove those phrases. “gta 6” also matches GTA6, GTA-6, and GTA/6. It does not match GTA 5.
+
+On YouTube, Home, Search, Subscriptions, Shorts shelves, and the sidebar are filtered. A matching video you open stays covered until you play it. Matching Shorts are skipped. LinkedIn and X hide the matching post. Kick and Twitch hide the matching stream, category, clip, chat line, and a live player whose title or category matches.
+
+The toolbar badge counts how many items are hidden on that tab. Turn a platform off and that site stays as it is.
+
+For the Turkish listing, use the name `Muty — Eşleşen Videoları ve Gönderileri Gizle` and this summary: YouTube, LinkedIn, X, Kick ve Twitch’te başlık seçtiğiniz kelimeleri içerince videoyu veya gönderiyi gizler.
+
+Muty, seçtiğiniz kelimeleri içeren videoları ve gönderileri gizler. YouTube, LinkedIn, X, Kick ve Twitch desteklenir. Liste bu tarayıcıda kalır. Hiçbir şey gönderilmez. GTA 6 listede hazırdır. “gta 6”; GTA6, GTA-6 ve GTA/6 ile de eşleşir. GTA 5 ile eşleşmez. YouTube’da ana sayfa, arama, abonelikler, Shorts rafları ve video kenar çubuğu süzülür. Eşleşen bir videoyu açarsanız, siz oynatana kadar görüntü kapalı kalır. LinkedIn ve X eşleşen gönderiyi gizler. Kick ve Twitch eşleşen yayını, kategoriyi, klibi, sohbet satırını ve başlığı ya da kategorisi eşleşen oynatıcıyı gizler. Araç çubuğundaki rozet, o sekmede gizlenen öğe sayısını gösterir. Bir platformu kapatırsanız o site olduğu gibi kalır. Muty; YouTube, LinkedIn, X, Kick veya Twitch ile bağlantılı değildir.
+
+Screenshots should show a real feed with matching items gone and the badge count visible. Five of those help more than a picture of the popup.
+
 ## Development
 
 ```bash

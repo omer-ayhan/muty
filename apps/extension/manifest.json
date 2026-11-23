@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Muty",
+  "name": "Muty — Hide Matching Videos and Posts",
   "short_name": "Muty",
   "version": "1.1.0",
-  "description": "Hides matching videos and posts. The icon badge shows how many are hidden on this tab. Open Muty to see the same count.",
+  "description": "Hide videos and posts on YouTube, LinkedIn, X, Kick, and Twitch when the title contains words you choose.",
   "permissions": ["storage"],
   "host_permissions": [
     "https://www.youtube.com/*",
