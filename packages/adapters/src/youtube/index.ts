@@ -1,4 +1,4 @@
-import type { PlatformAdapter } from '@spoiler-mute/core';
+import type { PlatformAdapter } from '@muty/core';
 import { collapseYouTubeShelves, findYouTubeTargets, readYouTubeCard } from './feed.ts';
 import { createYouTubePage } from './page.ts';
 

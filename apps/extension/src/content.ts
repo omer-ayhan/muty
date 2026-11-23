@@ -1,5 +1,5 @@
-import { adapterFor } from '@spoiler-mute/adapters';
-import { applyFeed, normalizeSettings, platformEnabled, urlExcluded, type PageController, type Settings } from '@spoiler-mute/core';
+import { adapterFor } from '@muty/adapters';
+import { applyFeed, normalizeSettings, platformEnabled, urlExcluded, type PageController, type Settings } from '@muty/core';
 
 const adapter = adapterFor(location.href);
 const page: PageController | null = adapter?.createPageController?.() ?? null;
@@ -25,7 +25,7 @@ function publishCount(): void {
   publishedMatches = lastMatches;
   try {
     const pending = chrome.runtime.sendMessage({
-      type: 'spoiler-mute:count',
+      type: 'muty:count',
       hidden: lastHidden,
       matches: lastMatches,
     });
@@ -66,7 +66,7 @@ function onNavigate(): void {
 }
 
 function removePills(): void {
-  for (const node of document.querySelectorAll('.spoiler-mute-pill')) node.remove();
+  for (const node of document.querySelectorAll('.muty-pill')) node.remove();
 }
 
 removePills();
@@ -79,7 +79,7 @@ window.addEventListener('popstate', onNavigate);
 window.setInterval(onNavigate, 700);
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (!message || message.type !== 'spoiler-mute:get-count') return;
+  if (!message || message.type !== 'muty:get-count') return;
   sendResponse({ hidden: lastHidden, matches: lastMatches });
 });
 

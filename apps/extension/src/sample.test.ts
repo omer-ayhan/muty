@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { applyFeed, normalizeSettings } from '@spoiler-mute/core';
-import { createYouTubeAdapter } from '@spoiler-mute/adapters';
+import { applyFeed, normalizeSettings } from '@muty/core';
+import { createYouTubeAdapter } from '@muty/adapters';
 import { parseHTML } from 'linkedom';
 
 test('the sample feed hides GTA 6 titles and leaves the lookalikes', () => {
@@ -21,7 +21,7 @@ test('the sample feed hides GTA 6 titles and leaves the lookalikes', () => {
     const cards = [...feed.querySelectorAll('[data-sample]')];
     const card = cards.find((entry) => (entry.textContent ?? '').includes(text));
     assert.ok(card, `missing sample card: ${text}`);
-    return card.classList.contains('spoiler-mute-hidden');
+    return card.classList.contains('muty-hidden');
   }
 
   assert.equal(hidden('GTA 6 ending explained'), true);

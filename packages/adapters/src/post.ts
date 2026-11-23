@@ -1,5 +1,5 @@
-import type { CardText, PageController } from '@spoiler-mute/core';
-import { textsFrom } from '@spoiler-mute/core';
+import type { CardText, PageController } from '@muty/core';
+import { textsFrom } from '@muty/core';
 
 export function idlePage(): PageController {
   return {

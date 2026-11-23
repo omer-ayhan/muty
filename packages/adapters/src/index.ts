@@ -1,4 +1,4 @@
-import { PLATFORM_CATALOG, type PlatformAdapter, type PlatformId } from '@spoiler-mute/core';
+import { PLATFORM_CATALOG, type PlatformAdapter, type PlatformId } from '@muty/core';
 import { createKickAdapter } from './kick/index.ts';
 import { createLinkedInAdapter } from './linkedin/index.ts';
 import { createTwitchAdapter } from './twitch/index.ts';

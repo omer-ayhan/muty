@@ -1,4 +1,4 @@
-import { defaultSettings } from '@spoiler-mute/core';
+import { defaultSettings } from '@muty/core';
 
 function hiddenTitle(hidden: number): string {
   if (hidden <= 0) return 'Muty';
@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (!message || message.type !== 'spoiler-mute:count') return;
+  if (!message || message.type !== 'muty:count') return;
   const tabId = sender.tab?.id;
   if (typeof tabId !== 'number') {
     sendResponse({ ok: false });

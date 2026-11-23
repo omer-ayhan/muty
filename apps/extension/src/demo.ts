@@ -1,5 +1,5 @@
-import { applyFeed, GTA_PACK, addKeyword, addPack, cautionFor, normalizeSettings, removeKeyword, type Settings } from '@spoiler-mute/core';
-import { createYouTubeAdapter } from '@spoiler-mute/adapters';
+import { applyFeed, GTA_PACK, addKeyword, addPack, cautionFor, normalizeSettings, removeKeyword, type Settings } from '@muty/core';
+import { createYouTubeAdapter } from '@muty/adapters';
 
 const youtube = createYouTubeAdapter();
 const feed = must<HTMLElement>('#feed');
@@ -15,7 +15,7 @@ const enabled = must<HTMLInputElement>('#enabled');
 const matchChannel = must<HTMLInputElement>('#match-channel');
 const toggle = must<HTMLButtonElement>('#toggle-show');
 const defaultHint = hint.textContent ?? '';
-const storageKey = 'spoiler-mute-sample';
+const storageKey = 'muty-sample';
 
 let settings = load();
 let forceShow = false;

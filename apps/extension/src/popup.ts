@@ -1,4 +1,4 @@
-import { adapterFor, adapters } from '@spoiler-mute/adapters';
+import { adapterFor, adapters } from '@muty/adapters';
 import {
   GTA_PACK,
   PLATFORM_CATALOG,
@@ -14,7 +14,7 @@ import {
   setPlatform,
   type PlatformId,
   type Settings,
-} from '@spoiler-mute/core';
+} from '@muty/core';
 
 const enabledButton = must<HTMLButtonElement>('#enabled');
 const status = must<HTMLElement>('#status');
@@ -63,7 +63,7 @@ function storageArea(): StorageArea {
   if (chromeStorage) return chromeStorage;
   return {
     get(_key, callback) {
-      const raw = localStorage.getItem('spoiler-mute-settings');
+      const raw = localStorage.getItem('muty-settings');
       let stored: unknown;
       try {
         stored = raw ? JSON.parse(raw) : undefined;
@@ -73,7 +73,7 @@ function storageArea(): StorageArea {
       callback({ settings: stored });
     },
     set(items, callback) {
-      localStorage.setItem('spoiler-mute-settings', JSON.stringify(items.settings));
+      localStorage.setItem('muty-settings', JSON.stringify(items.settings));
       callback?.();
     },
   };
@@ -282,7 +282,7 @@ function readPage(): void {
       render();
       return;
     }
-    chrome.tabs.sendMessage(tab.id, { type: 'spoiler-mute:get-count' }, (response) => {
+    chrome.tabs.sendMessage(tab.id, { type: 'muty:get-count' }, (response) => {
       if (chrome.runtime.lastError || !response) {
         page = { kind: 'refresh', id: site.id, label: site.label };
       } else {
@@ -368,7 +368,7 @@ if (globalThis.chrome?.storage?.onChanged) {
 
 if (globalThis.chrome?.runtime?.onMessage) {
   chrome.runtime.onMessage.addListener((message) => {
-    if (!message || message.type !== 'spoiler-mute:count') return;
+    if (!message || message.type !== 'muty:count') return;
     if (page.kind !== 'active' && page.kind !== 'refresh') return;
     const payload = message as { hidden?: number; matches?: number };
     page = {

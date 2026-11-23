@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { applyFeed, normalizeSettings } from '@spoiler-mute/core';
+import { applyFeed, normalizeSettings } from '@muty/core';
 import { parseHTML } from 'linkedom';
 import { createLinkedInAdapter } from './index.ts';
 
@@ -19,8 +19,8 @@ test('a LinkedIn update hides when the commentary matches', () => {
     </div>
   `);
   applyFeed(document, createLinkedInAdapter(), settings, {});
-  assert.equal(document.querySelector('#bad')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#ok')?.classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#bad')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#ok')?.classList.contains('muty-hidden'), false);
 });
 
 test('a new LinkedIn feed card hides from the post text', () => {
@@ -36,8 +36,8 @@ test('a new LinkedIn feed card hides from the post text', () => {
     </div>
   `);
   applyFeed(document, createLinkedInAdapter(), settings, {});
-  assert.equal(document.querySelector('#bad')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#ok')?.classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#bad')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#ok')?.classList.contains('muty-hidden'), false);
   const hidden = document.querySelector('#bad') as HTMLElement | null;
   assert.equal(hidden?.style.getPropertyValue('display'), 'none');
 });
@@ -65,8 +65,8 @@ test('a LinkedIn search result hides when the row contains the phrase', () => {
     </div>
   `);
   applyFeed(document, createLinkedInAdapter(), settings, {});
-  assert.equal(document.querySelector('#post')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#person')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#ok')?.classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#nav')?.classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#post')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#person')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#ok')?.classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#nav')?.classList.contains('muty-hidden'), false);
 });

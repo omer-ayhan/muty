@@ -6,7 +6,7 @@ import {
   type CardText,
   type CompiledPhrase,
   type Settings,
-} from '@spoiler-mute/core';
+} from '@muty/core';
 
 const OUTER_TAGS = new Set([
   'ytd-rich-item-renderer',
@@ -56,7 +56,7 @@ const SHELF_SELECTOR = [
   'horizontal-shelf-view-model',
   'yt-official-card-view-model',
 ].join(',');
-const EXEMPT_SELECTOR = '.spoiler-mute-ui, ytd-reel-video-renderer, ytd-miniplayer';
+const EXEMPT_SELECTOR = '.muty-ui, ytd-reel-video-renderer, ytd-miniplayer';
 
 const TITLE_SELECTORS = [
   'a.ytLockupMetadataViewModelTitle',

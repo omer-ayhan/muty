@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { applyFeed, normalizeSettings } from '@spoiler-mute/core';
+import { applyFeed, normalizeSettings } from '@muty/core';
 import { parseHTML } from 'linkedom';
 import { createTwitterAdapter } from './index.ts';
 
@@ -26,12 +26,12 @@ test('a tweet hides on the tweet text and can match the name', () => {
   `);
   const twitter = createTwitterAdapter();
   applyFeed(document, twitter, settings, {});
-  assert.equal(document.querySelector('#bad')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#name')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#quoted')?.classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(document.querySelector('#bad')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#name')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#quoted')?.classList.contains('muty-hidden'), true);
   applyFeed(document, twitter, normalizeSettings({ keywords: ['gta 6'], matchTwitterName: false }), {});
-  assert.equal(document.querySelector('#name')?.classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#bad')?.classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(document.querySelector('#name')?.classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#bad')?.classList.contains('muty-hidden'), true);
 });
 
 test('a matching tweet hides its timeline cell', () => {
@@ -43,6 +43,6 @@ test('a matching tweet hides its timeline cell', () => {
     </div>
   `);
   applyFeed(document, createTwitterAdapter(), settings, {});
-  assert.equal(document.querySelector('#tweet')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#cell')?.classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(document.querySelector('#tweet')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#cell')?.classList.contains('muty-hidden'), true);
 });

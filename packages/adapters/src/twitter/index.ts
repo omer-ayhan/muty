@@ -1,4 +1,4 @@
-import { HIDDEN_CLASS, outermostMatches, setHidden, type PlatformAdapter } from '@spoiler-mute/core';
+import { HIDDEN_CLASS, outermostMatches, setHidden, type PlatformAdapter } from '@muty/core';
 import { idlePage, readPost } from '../post.ts';
 
 const HOST = /^https:\/\/([a-z0-9-]+\.)*(twitter\.com|x\.com)\//i;

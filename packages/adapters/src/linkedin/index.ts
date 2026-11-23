@@ -1,4 +1,4 @@
-import { clean, outermostMatches, textsFrom, type CardText, type PlatformAdapter, type Settings } from '@spoiler-mute/core';
+import { clean, outermostMatches, textsFrom, type CardText, type PlatformAdapter, type Settings } from '@muty/core';
 import { idlePage, readPost } from '../post.ts';
 
 const HOST = /^https:\/\/([a-z0-9-]+\.)*linkedin\.com\//i;

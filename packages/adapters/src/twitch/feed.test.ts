@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { applyFeed, normalizeSettings } from '@spoiler-mute/core';
+import { applyFeed, normalizeSettings } from '@muty/core';
 import { parseHTML } from 'linkedom';
 import { createTwitchAdapter } from './index.ts';
 
@@ -37,11 +37,11 @@ test('a Twitch stream card, category, and sidebar row hide when the game matches
     </div>
   `);
   applyFeed(document, createTwitchAdapter(), settings, {});
-  assert.equal(document.querySelector('#bad')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#category')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#side')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#ok')?.classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#five')?.classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#bad')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#category')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#side')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#ok')?.classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#five')?.classList.contains('muty-hidden'), false);
 });
 
 test('a Twitch category still hides when a badge is stuck to it', () => {
@@ -53,7 +53,7 @@ test('a Twitch category still hides when a badge is stuck to it', () => {
     </article>
   `);
   applyFeed(document, createTwitchAdapter(), settings, {});
-  assert.equal(document.querySelector('#glued')?.classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(document.querySelector('#glued')?.classList.contains('muty-hidden'), true);
 });
 
 test('a Twitch chat line and the live player hide when the stream or message matches', () => {
@@ -72,9 +72,9 @@ test('a Twitch chat line and the live player hide when the stream or message mat
     </div>
   `);
   applyFeed(document, createTwitchAdapter(), settings, {});
-  assert.equal(document.querySelector('#player')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('[data-a-target="stream-game-link"]')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('[data-a-target="stream-title"]')?.classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#bad')?.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#ok')?.classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#player')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('[data-a-target="stream-game-link"]')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('[data-a-target="stream-title"]')?.classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#bad')?.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#ok')?.classList.contains('muty-hidden'), false);
 });

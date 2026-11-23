@@ -1,4 +1,4 @@
-import { clean, textsFrom, type CardText, type PlatformAdapter } from '@spoiler-mute/core';
+import { clean, textsFrom, type CardText, type PlatformAdapter } from '@muty/core';
 import { idlePage } from '../post.ts';
 
 const HOST = /^https:\/\/([a-z0-9-]+\.)*(twitch\.tv|twitch\.com)\//i;

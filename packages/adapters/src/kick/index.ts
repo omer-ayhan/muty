@@ -1,4 +1,4 @@
-import { clean, outermostMatches, textsFrom, type CardText, type PlatformAdapter } from '@spoiler-mute/core';
+import { clean, outermostMatches, textsFrom, type CardText, type PlatformAdapter } from '@muty/core';
 import { idlePage } from '../post.ts';
 
 const HOST = /^https:\/\/([a-z0-9-]+\.)*kick\.com\//i;

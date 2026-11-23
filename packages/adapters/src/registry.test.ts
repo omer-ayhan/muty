@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { PLATFORM_CATALOG } from '@spoiler-mute/core';
+import { PLATFORM_CATALOG } from '@muty/core';
 import { adapterFor, adapters } from './index.ts';
 
 test('every catalog platform has one adapter', () => {

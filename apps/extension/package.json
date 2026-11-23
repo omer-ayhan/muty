@@ -1,11 +1,11 @@
 {
-  "name": "@spoiler-mute/extension",
+  "name": "@muty/extension",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
-    "@spoiler-mute/adapters": "*",
-    "@spoiler-mute/core": "*"
+    "@muty/adapters": "*",
+    "@muty/core": "*"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.31",

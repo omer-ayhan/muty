@@ -10,7 +10,7 @@
 ## Learned Workspace Facts
 
 - Muty is a Chrome Manifest V3 extension that hides matching posts on YouTube, LinkedIn, X, Kick, and Twitch. The X platform id stays `twitter` so saved settings keep working. Twitch runs on twitch.tv, and twitch.com is included too.
-- The repo is an npm-workspaces Turborepo. `packages/core` (`@spoiler-mute/core`) owns matching, settings, and the hide loop. `packages/adapters` (`@spoiler-mute/adapters`) contains the YouTube, LinkedIn, X, Kick, and Twitch adapters, each in its own folder. `apps/extension` is the extension. Load it unpacked from `apps/extension/dist` after `npm run build`.
+- The repo is an npm-workspaces Turborepo. `packages/core` (`@muty/core`) owns matching, settings, and the hide loop. `packages/adapters` (`@muty/adapters`) contains the YouTube, LinkedIn, X, Kick, and Twitch adapters, each in its own folder. `apps/extension` is the extension. Load it unpacked from `apps/extension/dist` after `npm run build`.
 - Default keywords are the GTA 6 pack: `gta 6`, `gta vi`, `grand theft auto 6`, and `grand theft auto vi`.
 - On YouTube, empty leftover containers (shelves, official cards, and channel headers) hide for any matching phrase, not only GTA 6.
 - On X, account names are matched by default. A popup checkbox turns that check off.

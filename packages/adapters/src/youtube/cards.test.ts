@@ -1,7 +1,7 @@
 // @ts-nocheck
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { applyFeed, normalizeSettings, type Settings } from '@spoiler-mute/core';
+import { applyFeed, normalizeSettings, type Settings } from '@muty/core';
 import { parseHTML } from 'linkedom';
 import { createYouTubeAdapter } from './index.ts';
 
@@ -61,7 +61,7 @@ const markup = `
     <ytd-backstage-post-renderer id="post">
       <yt-formatted-string id="content-text">Just watched the GTA 6 ending</yt-formatted-string>
     </ytd-backstage-post-renderer>
-    <div class="spoiler-mute-ui">
+    <div class="muty-ui">
       <ytd-rich-item-renderer id="exempt">
         <a id="video-title">GTA 6 inside the extension UI</a>
       </ytd-rich-item-renderer>
@@ -83,26 +83,26 @@ test('lockup cards hide the outer grid item', async () => {
   const document = await feed();
   const result = run(document, settings(), {});
   const spoiler = document.querySelector('#spoiler');
-  assert.equal(spoiler.classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#inner-lockup').classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(spoiler.classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#inner-lockup').classList.contains('muty-hidden'), false);
   assert.equal(spoiler.getAttribute('data-sm-phrase'), 'gta 6');
-  assert.equal(document.querySelector('#safe').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#gta5').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#essay').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#joined').classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(document.querySelector('#safe').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#gta5').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#essay').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#joined').classList.contains('muty-hidden'), true);
   assert.ok(result.hidden >= 5);
 });
 
 test('a description can hide a harmless title', async () => {
   const document = await feed();
   run(document, settings(), {});
-  assert.equal(document.querySelector('#described').classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(document.querySelector('#described').classList.contains('muty-hidden'), true);
 });
 
 test('channel names are ignored unless the setting is on', async () => {
   const document = await feed();
   run(document, settings(), {});
-  assert.equal(document.querySelector('#channel-card').classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#channel-card').classList.contains('muty-hidden'), false);
   run(document, settings({ matchChannel: true }), {});
   assert.equal(document.querySelector('#channel-card').getAttribute('data-sm-phrase'), 'gta 6');
 });
@@ -110,11 +110,11 @@ test('channel names are ignored unless the setting is on', async () => {
 test('a mixed shelf stays and a fully matching shelf collapses', async () => {
   const document = await feed();
   run(document, settings(), {});
-  assert.equal(document.querySelector('#short-bad').classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#short-ok').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#mixed-shelf').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#bad-shelf').classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#post').classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(document.querySelector('#short-bad').classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#short-ok').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#mixed-shelf').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#bad-shelf').classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#post').classList.contains('muty-hidden'), true);
 });
 
 test('empty shorts shelves and official cards collapse', async () => {
@@ -166,25 +166,25 @@ test('empty shorts shelves and official cards collapse', async () => {
     </div>
   `);
   run(document, settings(), {});
-  assert.equal(document.querySelector('#official').classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#emptied').classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#shorts-row').classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#mixed-row').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#s4').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#cooking').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#cook-ok').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#channel').classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(document.querySelector('#official').classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#emptied').classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#shorts-row').classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#mixed-row').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#s4').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#cooking').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#cook-ok').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#channel').classList.contains('muty-hidden'), true);
   run(document, settings(), { forceShow: true });
-  assert.equal(document.querySelector('#official').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#shorts-row').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#channel').classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#official').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#shorts-row').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#channel').classList.contains('muty-hidden'), false);
 });
 
 test('the extension UI and the playing Short are left alone', async () => {
   const document = await feed();
   run(document, settings(), {});
-  assert.equal(document.querySelector('#exempt').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#playing-lockup').classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#exempt').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#playing-lockup').classList.contains('muty-hidden'), false);
 });
 
 test('showing hidden videos keeps the count and removes the hide class', async () => {
@@ -192,8 +192,8 @@ test('showing hidden videos keeps the count and removes the hide class', async (
   const shown = run(document, settings(), { forceShow: true });
   assert.equal(shown.hidden, 0);
   assert.ok(shown.matches >= 5);
-  assert.equal(document.querySelector('#spoiler').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#bad-shelf').classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#spoiler').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#bad-shelf').classList.contains('muty-hidden'), false);
 });
 
 test('turning filtering off clears an earlier hide', async () => {
@@ -201,8 +201,8 @@ test('turning filtering off clears an earlier hide', async () => {
   run(document, settings(), {});
   const cleared = run(document, settings({ enabled: false }), {});
   assert.equal(cleared.hidden, 0);
-  assert.equal(document.querySelector('#spoiler').classList.contains('spoiler-mute-hidden'), false);
-  assert.equal(document.querySelector('#bad-shelf').classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#spoiler').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#bad-shelf').classList.contains('muty-hidden'), false);
 });
 
 test('an aria label uses the title and not the channel that follows', async () => {
@@ -218,8 +218,8 @@ test('an aria label uses the title and not the channel that follows', async () =
     </div>
   `);
   run(document, settings(), {});
-  assert.equal(document.querySelector('#aria-title').classList.contains('spoiler-mute-hidden'), true);
-  assert.equal(document.querySelector('#aria-channel').classList.contains('spoiler-mute-hidden'), false);
+  assert.equal(document.querySelector('#aria-title').classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#aria-channel').classList.contains('muty-hidden'), false);
 });
 
 test('a title inside an open shadow root still matches', async () => {
@@ -233,6 +233,6 @@ test('a title inside an open shadow root still matches', async () => {
   link.textContent = 'GTA 6 from the shadow root';
   shadow.append(link);
   const result = run(document, settings(), {});
-  assert.equal(host.classList.contains('spoiler-mute-hidden'), true);
+  assert.equal(host.classList.contains('muty-hidden'), true);
   assert.equal(result.hidden, 1);
 });

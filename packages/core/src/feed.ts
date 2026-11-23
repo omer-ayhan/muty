@@ -2,7 +2,7 @@ import type { PlatformId } from './platforms.ts';
 import type { Settings } from './settings.ts';
 import { compilePhrase, findMatch, type CompiledPhrase } from './match.ts';
 
-export const HIDDEN_CLASS = 'spoiler-mute-hidden';
+export const HIDDEN_CLASS = 'muty-hidden';
 
 export interface CardText {
   title: string;

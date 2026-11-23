@@ -1,4 +1,4 @@
-import { findMatch, type PageController, type PageScan } from '@spoiler-mute/core';
+import { findMatch, type PageController, type PageScan } from '@muty/core';
 
 const NEXT_SELECTORS = [
   '#navigation-button-down button',
@@ -40,7 +40,7 @@ function mediaId(location: Location): string {
 }
 
 function allowKey(id: string): string {
-  return `spoiler-mute-allow:${id}`;
+  return `muty-allow:${id}`;
 }
 
 function readFirst(document: Document, selectors: readonly string[]): string {
@@ -145,10 +145,10 @@ export function createYouTubePage(): PageController {
     removeCover();
     coverPhrase = phrase;
     const dialog = document.createElement('div');
-    dialog.className = 'spoiler-mute-cover spoiler-mute-ui';
+    dialog.className = 'muty-cover muty-ui';
     dialog.setAttribute('role', 'dialog');
     dialog.setAttribute('aria-modal', 'true');
-    dialog.setAttribute('aria-labelledby', 'spoiler-mute-cover-title');
+    dialog.setAttribute('aria-labelledby', 'muty-cover-title');
 
     const sheet = document.createElement('div');
     sheet.className = 'sheet';
@@ -156,7 +156,7 @@ export function createYouTubePage(): PageController {
     kicker.className = 'kicker';
     kicker.textContent = 'Muty';
     const heading = document.createElement('h2');
-    heading.id = 'spoiler-mute-cover-title';
+    heading.id = 'muty-cover-title';
     heading.textContent = `This matches “${phrase}”.`;
     const note = document.createElement('p');
     note.className = 'note';
