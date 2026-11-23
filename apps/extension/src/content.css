@@ -2,6 +2,86 @@
   display: none !important;
 }
 
+.muty-consent {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 24px !important;
+  background: rgba(20, 18, 15, 0.72) !important;
+  color: #f3ecdf !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.muty-consent .sheet {
+  width: min(440px, 100%) !important;
+  margin: 0 !important;
+  padding: 22px 22px 18px !important;
+  border-radius: 18px !important;
+  background: #1c1915 !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45) !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+}
+
+.muty-consent .kicker {
+  margin: 0 0 8px !important;
+  color: #e7a04a !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  line-height: 1.2 !important;
+  text-transform: uppercase !important;
+}
+
+.muty-consent h2 {
+  margin: 0 !important;
+  color: #f3ecdf !important;
+  font-family: "Iowan Old Style", Palatino, Georgia, serif !important;
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+}
+
+.muty-consent p.note {
+  margin: 12px 0 0 !important;
+  color: #d9d0c2 !important;
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+}
+
+.muty-consent .actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-top: 18px !important;
+}
+
+.muty-consent a {
+  color: #f3ecdf !important;
+  font-size: 14px !important;
+}
+
+.muty-consent button.primary {
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #f3ecdf !important;
+  color: #1c1915 !important;
+  padding: 12px 18px !important;
+  font: inherit !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+
 .muty-ui,
 .muty-ui * {
   box-sizing: border-box !important;

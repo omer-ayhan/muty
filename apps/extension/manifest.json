@@ -78,6 +78,6 @@
   ],
   "options_ui": {
     "page": "popup.html",
-    "open_in_tab": true
+    "open_in_tab": false
   }
 }

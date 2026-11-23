@@ -37,7 +37,6 @@ const coverWatch = must<HTMLInputElement>('#cover-watch');
 const skipShorts = must<HTMLInputElement>('#skip-shorts');
 const platformBox = must<HTMLElement>('#platforms');
 const agreement = must<HTMLElement>('#agreement');
-const controls = must<HTMLElement>('#controls');
 const agreeButton = must<HTMLButtonElement>('#agree');
 const defaultHint = hint.textContent ?? '';
 
@@ -91,7 +90,7 @@ function everyPlatformOff(current: Settings): boolean {
 
 function statusText(): string {
   if (!settings) return 'Loading your list…';
-  if (!settings.dataUseAccepted) return 'Agree before Muty reads a page.';
+  if (!settings.dataUseAccepted) return 'Agree to start hiding. Until then, every page stays as it is.';
   if (!settings.enabled) return 'Filtering is off.';
   if (everyPlatformOff(settings)) return 'Every platform is turned off.';
   if (settings.keywords.length === 0) return 'Add a word to start hiding videos.';
@@ -247,7 +246,6 @@ function buildPlatforms(): void {
 function render(): void {
   if (!settings) return;
   agreement.hidden = settings.dataUseAccepted;
-  controls.hidden = !settings.dataUseAccepted;
   enabledButton.setAttribute('aria-checked', settings.enabled ? 'true' : 'false');
   enabledButton.setAttribute('aria-label', settings.enabled ? 'Filtering on' : 'Filtering off');
   matchChannel.checked = settings.matchChannel;
@@ -307,9 +305,38 @@ function readPage(): void {
   });
 }
 
+const consentTab = new URLSearchParams(location.search).get('consent') === '1';
+
+function closeConsentTab(): void {
+  const tabs = globalThis.chrome?.tabs;
+  if (!tabs?.getCurrent || !tabs.remove) {
+    window.close();
+    return;
+  }
+  tabs.getCurrent((tab) => {
+    if (typeof tab?.id === 'number') {
+      tabs.remove(tab.id);
+      return;
+    }
+    window.close();
+  });
+}
+
+if (consentTab) {
+  document.documentElement.classList.add('is-consent');
+  document.title = 'Agree to start Muty';
+  agreeButton.textContent = 'Agree and start';
+}
+
 agreeButton.addEventListener('click', () => {
   if (!settings) return;
-  save({ ...settings, dataUseAccepted: true });
+  const next = { ...settings, dataUseAccepted: true };
+  settings = next;
+  render();
+  storage.set({ settings: next }, () => {
+    void chrome.runtime?.lastError;
+    if (consentTab) closeConsentTab();
+  });
 });
 
 enabledButton.addEventListener('click', () => {
@@ -375,6 +402,7 @@ if (globalThis.chrome?.storage?.onChanged) {
     if (area !== 'local' || !changes.settings) return;
     settings = normalizeSettings(changes.settings.newValue);
     render();
+    if (consentTab && settings.dataUseAccepted) closeConsentTab();
   });
 }
 
@@ -394,6 +422,9 @@ if (globalThis.chrome?.runtime?.onMessage) {
   });
 }
 
+const popupViews = chrome.extension?.getViews?.({ type: 'popup' }) ?? [];
+if (popupViews.includes(window)) document.documentElement.classList.add('is-popup');
+
 for (const link of document.querySelectorAll<HTMLAnchorElement>('a.privacy-policy')) {
   link.href = PRIVACY_POLICY_URL;
   link.target = '_blank';
@@ -406,4 +437,5 @@ storage.get('settings', (data) => {
   settings = normalizeSettings(data.settings);
   render();
   readPage();
+  if (consentTab && settings.dataUseAccepted) closeConsentTab();
 });
