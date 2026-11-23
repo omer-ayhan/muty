@@ -66,6 +66,12 @@ Muty, seçtiğiniz kelimeleri içeren videoları ve gönderileri gizler. YouTube
 
 Screenshots should show a real feed with matching items gone and the badge count visible. Five of those help more than a picture of the popup.
 
+Merging `development` into `main` builds `muty-chrome-vX.Y.Z.zip`, writes `SHA256SUMS.txt`, and publishes both on the GitHub Release. The same zip is then submitted to the Chrome Web Store. Source archives are attached by GitHub.
+
+Create the store item once in the dashboard. Set the category, screenshots, and the privacy policy URL. Add these repository secrets before that submit step can succeed: `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN`, `CWS_EXTENSION_ID`. The privacy policy URL works after this repository is public. Until the secrets exist, the GitHub Release is still created and the store job fails. Re-run that failed job after the secrets are set.
+
+After the repository is public and this workflow is on `main`, run `scripts/protect-branches.sh --apply`. That blocks direct pushes to `main` and accepts a pull request into `main` only from `development`.
+
 ## Development
 
 ```bash
