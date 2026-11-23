@@ -7,6 +7,7 @@ import {
   addPack,
   cautionFor,
   isPlatformId,
+  PRIVACY_POLICY_URL,
   normalizeSettings,
   platformEnabled,
   removeExcludedUrl,
@@ -35,6 +36,9 @@ const matchTwitterName = must<HTMLInputElement>('#match-twitter-name');
 const coverWatch = must<HTMLInputElement>('#cover-watch');
 const skipShorts = must<HTMLInputElement>('#skip-shorts');
 const platformBox = must<HTMLElement>('#platforms');
+const agreement = must<HTMLElement>('#agreement');
+const controls = must<HTMLElement>('#controls');
+const agreeButton = must<HTMLButtonElement>('#agree');
 const defaultHint = hint.textContent ?? '';
 
 type PageState =
@@ -87,6 +91,7 @@ function everyPlatformOff(current: Settings): boolean {
 
 function statusText(): string {
   if (!settings) return 'Loading your list…';
+  if (!settings.dataUseAccepted) return 'Agree before Muty reads a page.';
   if (!settings.enabled) return 'Filtering is off.';
   if (everyPlatformOff(settings)) return 'Every platform is turned off.';
   if (settings.keywords.length === 0) return 'Add a word to start hiding videos.';
@@ -241,6 +246,8 @@ function buildPlatforms(): void {
 
 function render(): void {
   if (!settings) return;
+  agreement.hidden = settings.dataUseAccepted;
+  controls.hidden = !settings.dataUseAccepted;
   enabledButton.setAttribute('aria-checked', settings.enabled ? 'true' : 'false');
   enabledButton.setAttribute('aria-label', settings.enabled ? 'Filtering on' : 'Filtering off');
   matchChannel.checked = settings.matchChannel;
@@ -299,6 +306,11 @@ function readPage(): void {
     });
   });
 }
+
+agreeButton.addEventListener('click', () => {
+  if (!settings) return;
+  save({ ...settings, dataUseAccepted: true });
+});
 
 enabledButton.addEventListener('click', () => {
   if (!settings) return;
@@ -380,6 +392,12 @@ if (globalThis.chrome?.runtime?.onMessage) {
     };
     render();
   });
+}
+
+for (const link of document.querySelectorAll<HTMLAnchorElement>('a.privacy-policy')) {
+  link.href = PRIVACY_POLICY_URL;
+  link.target = '_blank';
+  link.rel = 'noreferrer';
 }
 
 buildPlatforms();

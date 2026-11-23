@@ -15,7 +15,11 @@ let publishedMatches = -1;
 
 function filteringOn(): boolean {
   return Boolean(
-    adapter && settings.enabled && platformEnabled(settings, adapter.id) && !urlExcluded(settings, location.href),
+    adapter &&
+      settings.dataUseAccepted &&
+      settings.enabled &&
+      platformEnabled(settings, adapter.id) &&
+      !urlExcluded(settings, location.href),
   );
 }
 
@@ -36,7 +40,7 @@ function publishCount(): void {
 }
 
 function scan(): void {
-  if (scanning || !adapter) return;
+  if (scanning || !adapter || !settings.dataUseAccepted) return;
   scanning = true;
   try {
     const feedSettings = filteringOn() ? settings : { ...settings, enabled: false };
@@ -70,7 +74,6 @@ function removePills(): void {
 }
 
 removePills();
-page?.start(document);
 document.addEventListener('yt-navigate-finish', onNavigate);
 document.addEventListener('yt-navigate-start', () => {
   page?.onNavigateStart();
@@ -87,6 +90,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== 'local' || !changes.settings) return;
   settings = normalizeSettings(changes.settings.newValue);
   page?.onNavigate();
+  start();
   scheduleScan();
 });
 
@@ -95,9 +99,14 @@ const observer = new MutationObserver(() => {
   scheduleScan();
 });
 
+let watching = false;
+
 function start(): void {
+  if (!settings.dataUseAccepted || watching) return;
   const root = document.documentElement;
   if (!root) return;
+  watching = true;
+  page?.start(document);
   observer.observe(root, { childList: true, subtree: true });
   scan();
 }

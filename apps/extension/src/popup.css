@@ -76,6 +76,49 @@ h1 {
   font-weight: 600;
 }
 
+#agreement {
+  margin: 0 0 14px;
+  padding: 12px;
+  border: 1px solid var(--ink);
+  border-radius: 12px;
+  background: var(--field);
+}
+
+#agreement h2 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  letter-spacing: 0;
+}
+
+#agreement p {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+#agreement a,
+footer a {
+  color: var(--ink);
+}
+
+footer a {
+  display: inline-block;
+  margin-top: 6px;
+}
+
+#agree {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 form label,
 fieldset legend {
   display: block;

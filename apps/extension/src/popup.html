@@ -15,6 +15,18 @@
       <button id="enabled" class="switch" type="button" role="switch" aria-checked="true" aria-label="Filtering on"></button>
     </header>
     <p id="status" role="status">Loading your list…</p>
+    <section id="agreement">
+      <h2>Before Muty reads a page</h2>
+      <p>
+        Muty reads titles, descriptions, categories, and chat on YouTube, LinkedIn, X, Kick, and Twitch. It also
+        reads channel and account names when those checks are on. It compares that text with your list and hides
+        matches. Your list, platform choices, and excluded URLs stay in this browser. Page text is not saved and is
+        not sent anywhere.
+      </p>
+      <p><a class="privacy-policy" href="https://github.com/omer-ayhan/muty/blob/main/PRIVACY.md">Privacy policy</a></p>
+      <button id="agree" type="button">Agree</button>
+    </section>
+    <div id="controls" hidden>
     <form id="add-form">
       <label for="phrase">Hide a title that contains</label>
       <div class="add-row">
@@ -51,7 +63,11 @@
       <ul id="excluded-urls"></ul>
       <p id="exclude-empty" class="empty" hidden>No excluded URLs.</p>
     </fieldset>
-    <footer>Turn a platform off and that site stays as it is. The list stays in this browser.</footer>
+    </div>
+    <footer>
+      Turn a platform off and that site stays as it is. The list stays in this browser.
+      <a class="privacy-policy" href="https://github.com/omer-ayhan/muty/blob/main/PRIVACY.md">Privacy policy</a>
+    </footer>
     <script src="popup.js"></script>
   </body>
 </html>

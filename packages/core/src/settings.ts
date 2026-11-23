@@ -10,11 +10,13 @@ export const GTA_PACK = [
 
 export const MAX_KEYWORDS = 200;
 export const MAX_EXCLUDED_URLS = 100;
+export const PRIVACY_POLICY_URL = 'https://github.com/omer-ayhan/muty/blob/main/PRIVACY.md';
 const MAX_LENGTH = 80;
 const MAX_URL_LENGTH = 2000;
 
 export interface Settings {
   version: 1;
+  dataUseAccepted: boolean;
   enabled: boolean;
   matchChannel: boolean;
   matchTwitterName: boolean;
@@ -70,6 +72,7 @@ function readPlatforms(raw: unknown): Record<PlatformId, boolean> {
 export function defaultSettings(): Settings {
   return {
     version: 1,
+    dataUseAccepted: false,
     enabled: true,
     matchChannel: false,
     matchTwitterName: true,
@@ -87,6 +90,7 @@ export function normalizeSettings(raw: unknown): Settings {
   const source = raw as Record<string, unknown>;
   return {
     version: 1,
+    dataUseAccepted: source.dataUseAccepted === true,
     enabled: source.enabled !== false,
     matchChannel: Boolean(source.matchChannel),
     matchTwitterName: source.matchTwitterName !== false,

@@ -18,6 +18,7 @@ const allOn = { youtube: true, linkedin: true, twitter: true, kick: true, twitch
 
 test('missing settings fall back to the GTA 6 list', () => {
   const settings = normalizeSettings(null);
+  assert.equal(settings.dataUseAccepted, false);
   assert.equal(settings.enabled, true);
   assert.equal(settings.matchChannel, false);
   assert.equal(settings.matchTwitterName, true);
@@ -27,6 +28,12 @@ test('missing settings fall back to the GTA 6 list', () => {
   assert.equal(platformEnabled(settings, 'youtube'), true);
   assert.deepEqual(settings.keywords, [...GTA_PACK]);
   assert.deepEqual(settings.excludedUrls, []);
+});
+
+test('page text stays unread until the agreement is accepted', () => {
+  assert.equal(normalizeSettings({}).dataUseAccepted, false);
+  assert.equal(normalizeSettings({ dataUseAccepted: true }).dataUseAccepted, true);
+  assert.equal(normalizeSettings({ dataUseAccepted: 'yes' }).dataUseAccepted, false);
 });
 
 test('an empty keyword list stays empty', () => {

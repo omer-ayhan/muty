@@ -7,6 +7,7 @@ export type { CompiledPhrase } from './match.ts';
 export {
   GTA_PACK,
   MAX_KEYWORDS,
+  PRIVACY_POLICY_URL,
   addExcludedUrl,
   addKeyword,
   addPack,
