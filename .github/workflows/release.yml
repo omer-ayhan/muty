@@ -57,11 +57,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.plan.outputs.version }}
         run: |
-          gh release create "v${VERSION}" \
-            --title "Muty v${VERSION}" \
-            --notes-file release/notes.md \
-            "release/muty-chrome-v${VERSION}.zip" \
-            release/SHA256SUMS.txt
+          if gh release view "v${VERSION}" >/dev/null 2>&1; then
+            echo "Release v${VERSION} already exists."
+          else
+            gh release create "v${VERSION}" \
+              --title "Muty v${VERSION}" \
+              --notes-file release/notes.md \
+              "release/muty-chrome-v${VERSION}.zip" \
+              release/SHA256SUMS.txt
+          fi
       - name: Upload the store package
         if: steps.plan.outputs.release == 'true'
         uses: actions/upload-artifact@v4
@@ -72,11 +76,20 @@ jobs:
             release/SHA256SUMS.txt
             release/version.txt
           if-no-files-found: error
+
+  manifest:
+    name: manifest
+    needs: release
+    if: needs.release.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Open the manifest pull request
-        if: steps.plan.outputs.release == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          VERSION: ${{ steps.plan.outputs.version }}
+          VERSION: ${{ needs.release.outputs.version }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
