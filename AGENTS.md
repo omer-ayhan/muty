@@ -8,7 +8,6 @@
 - Match phrases across spacing and punctuation (`GTA6`, `GTA-6`, `GTA/6`). Do not match nearby titles such as GTA 5 or "GTA video".
 - Platform toggles live in the popup. Turning a platform off leaves that site unchanged. The word list stays on the device.
 - Open the first-run agreement as a new tab in the current window, selected and in front. A separate window can sit behind the browser, so the user never accepts and hiding stays off.
-- Keep `main` release-only. Feature branches merge into `development`, and only `development` merges into `main`. That merge publishes the Chrome Web Store release. The workflow is on `feat/release-pipeline`.
 
 ## Learned Workspace Facts
 
