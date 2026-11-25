@@ -1,4 +1,11 @@
-.muty-hidden {
+.muty-hidden,
+#movie_player .ytp-videowall-still.muty-hidden,
+#movie_player .ytp-modern-videowall-still.muty-hidden,
+#movie_player .ytp-ce-element.muty-hidden,
+.html5-video-player .ytp-videowall-still.muty-hidden,
+.html5-video-player .ytp-modern-videowall-still.muty-hidden,
+.html5-video-player .ytp-ce-element.muty-hidden,
+.ytp-fullscreen-grid .ytp-modern-videowall-still.muty-hidden {
   display: none !important;
 }
 

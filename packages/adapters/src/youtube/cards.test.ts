@@ -93,6 +93,69 @@ test('lockup cards hide the outer grid item', async () => {
   assert.ok(result.hidden >= 5);
 });
 
+test('the end screen hides a matching tile and leaves GTA IV', async () => {
+  const { parseHTML } = await import('linkedom');
+  const { document } = parseHTML(`
+    <div class="html5-endscreen">
+      <a class="ytp-videowall-still" id="end-gta6" href="/watch?v=end6">
+        <span class="ytp-videowall-still-info-title">How GTA 6 Reinvented Vice City?</span>
+        <span class="ytp-videowall-still-info-author">TheGameEssayist</span>
+      </a>
+      <a class="ytp-videowall-still" id="end-gta4" href="/watch?v=end4">
+        <span class="ytp-videowall-still-info-title">The coldest moment in any Grand Theft Auto game - GTA IV</span>
+      </a>
+      <div class="ytp-ce-element ytp-ce-video" id="end-card">
+        <div class="ytp-ce-video-title">GTA VI trailer breakdown</div>
+      </div>
+    </div>
+  `);
+  run(document, settings(), {});
+  assert.equal(document.querySelector('#end-gta6').classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#end-gta4').classList.contains('muty-hidden'), false);
+  assert.equal(document.querySelector('#end-card').classList.contains('muty-hidden'), true);
+});
+
+test('the fullscreen end grid hides a matching tile and leaves GTA IV', async () => {
+  const { document } = parseHTML(`
+    <div class="ytp-fullscreen-grid">
+      <div class="ytp-fullscreen-grid-stills-container">
+        <a class="ytp-modern-videowall-still ytp-suggestion-set" id="modern-gta6" href="/watch?v=m6">
+          <span class="ytp-modern-videowall-still-info">
+            <span class="ytp-modern-videowall-still-info-title">GTA 6 Crazy Insane APC TANK RAMPAGE!</span>
+            <span class="ytp-modern-videowall-still-info-author">Badass Villain</span>
+          </span>
+        </a>
+        <a class="ytp-modern-videowall-still ytp-suggestion-set" id="modern-gta4" href="/watch?v=m4">
+          <span class="ytp-modern-videowall-still-info-title">Gta IV random events</span>
+        </a>
+      </div>
+    </div>
+  `);
+  run(document, settings(), {});
+  assert.equal(document.querySelector('#modern-gta6').classList.contains('muty-hidden'), true);
+  assert.equal(document.querySelector('#modern-gta6').style.display, 'none');
+  assert.equal(document.querySelector('#modern-gta4').classList.contains('muty-hidden'), false);
+});
+
+test('an end screen inside the player shadow hides GTA 6 and leaves GTA IV', async () => {
+  const { parseHTML } = await import('linkedom');
+  const { document } = parseHTML('<ytd-player id="player"></ytd-player>');
+  const player = document.querySelector('#player');
+  const shadow = player.attachShadow({ mode: 'open' });
+  shadow.innerHTML = `
+    <a class="ytp-videowall-still" id="shadow-gta6" href="/watch?v=s6">
+      <span class="ytp-videowall-still-info-title">GTA 6 is COLLAPSING</span>
+    </a>
+    <a class="ytp-videowall-still" id="shadow-gta4" href="/watch?v=s4">
+      <span class="ytp-videowall-still-info-title">Michael Rosen Plays Grand Theft Auto 4</span>
+    </a>
+  `;
+  run(document, settings(), {});
+  assert.equal(shadow.querySelector('#shadow-gta6').classList.contains('muty-hidden'), true);
+  assert.equal(shadow.querySelector('#shadow-gta6').style.display, 'none');
+  assert.equal(shadow.querySelector('#shadow-gta4').classList.contains('muty-hidden'), false);
+});
+
 test('a description can hide a harmless title', async () => {
   const document = await feed();
   run(document, settings(), {});

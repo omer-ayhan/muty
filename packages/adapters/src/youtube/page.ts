@@ -1,42 +1,43 @@
-import { findMatch, type PageController, type PageScan } from '@muty/core';
+import { findMatch, type PageController, type PageScan } from "@muty/core";
 
 const NEXT_SELECTORS = [
-  '#navigation-button-down button',
-  'ytd-shorts #navigation-button-down button',
-  '.navigation-button-down button',
+  "#navigation-button-down button",
+  "ytd-shorts #navigation-button-down button",
+  ".navigation-button-down button",
 ];
 
 const WATCH_TITLE_SELECTORS = [
-  'ytd-watch-metadata h1 yt-formatted-string',
-  'ytd-watch-metadata #title yt-formatted-string',
-  'h1.ytd-watch-metadata yt-formatted-string',
-  'ytm-slim-video-information-renderer h2 .ytAttributedStringHost',
-  'h2.slim-video-information-title',
-  'ytd-watch-metadata h1',
+  "ytd-watch-metadata h1 yt-formatted-string",
+  "ytd-watch-metadata #title yt-formatted-string",
+  "h1.ytd-watch-metadata yt-formatted-string",
+  "ytm-slim-video-information-renderer h2 .ytAttributedStringHost",
+  "h2.slim-video-information-title",
+  "ytd-watch-metadata h1",
 ];
 
 const SHORTS_TITLE_SELECTORS = [
-  'yt-shorts-video-title-view-model h2',
-  'h2.ytShortsVideoTitleViewModelShortsVideoTitle',
-  '.ytShortsVideoTitleViewModelShortsVideoTitle',
-  'ytd-reel-video-renderer h2',
+  "yt-shorts-video-title-view-model h2",
+  "h2.ytShortsVideoTitleViewModelShortsVideoTitle",
+  ".ytShortsVideoTitleViewModelShortsVideoTitle",
+  "ytd-reel-video-renderer h2",
 ];
 
-type PageKind = 'watch' | 'shorts' | 'feed';
+type PageKind = "watch" | "shorts" | "feed";
 
 function pageKind(location: Location): PageKind {
-  if (location.pathname === '/watch') return 'watch';
-  if (location.pathname.startsWith('/shorts/')) return 'shorts';
-  return 'feed';
+  if (location.pathname === "/watch") return "watch";
+  if (location.pathname.startsWith("/shorts/")) return "shorts";
+  return "feed";
 }
 
 function mediaId(location: Location): string {
-  if (location.pathname === '/watch') return new URL(location.href).searchParams.get('v') || '';
-  if (location.pathname.startsWith('/shorts/')) {
-    const [, , id] = location.pathname.split('/');
-    return id || '';
+  if (location.pathname === "/watch")
+    return new URL(location.href).searchParams.get("v") || "";
+  if (location.pathname.startsWith("/shorts/")) {
+    const [, , id] = location.pathname.split("/");
+    return id || "";
   }
-  return '';
+  return "";
 }
 
 function allowKey(id: string): string {
@@ -46,38 +47,60 @@ function allowKey(id: string): string {
 function readFirst(document: Document, selectors: readonly string[]): string {
   for (const selector of selectors) {
     const el = document.querySelector(selector);
-    const text = el ? (el.textContent ?? '').replace(/\s+/g, ' ').trim() : '';
+    const text = el ? (el.textContent ?? "").replace(/\s+/g, " ").trim() : "";
     if (text) return text;
   }
-  return '';
+  return "";
 }
 
 function titleFromDocument(document: Document, location: Location): string {
   const kind = pageKind(location);
-  if (kind === 'watch') return readFirst(document, WATCH_TITLE_SELECTORS) || fallbackTitle(document);
-  if (kind === 'shorts') return readFirst(document, SHORTS_TITLE_SELECTORS) || fallbackTitle(document);
-  return '';
+  if (kind === "watch")
+    return (
+      readFirst(document, WATCH_TITLE_SELECTORS) || fallbackTitle(document)
+    );
+  if (kind === "shorts")
+    return (
+      readFirst(document, SHORTS_TITLE_SELECTORS) || fallbackTitle(document)
+    );
+  return "";
 }
 
 function fallbackTitle(document: Document): string {
-  return document.title.replace(/\s+[-|]\s+YouTube\s*$/i, '').trim();
+  return document.title.replace(/\s+[-|]\s+YouTube\s*$/i, "").trim();
 }
 
 function isVideo(target: EventTarget | null): target is HTMLVideoElement {
-  return Boolean(target && 'pause' in target && typeof target.pause === 'function');
+  return Boolean(
+    target && "pause" in target && typeof target.pause === "function",
+  );
 }
 
 export function createYouTubePage(): PageController {
   let cover: HTMLElement | null = null;
-  let coverPhrase = '';
+  let coverPhrase = "";
   let shortsSkipStreak = 0;
-  let lastSkippedId = '';
+  let lastSkippedId = "";
   let skipTimer = 0;
+  let scanNow: (() => void) | null = null;
+  let watchedPlayer: ShadowRoot | null = null;
+  let playerWatch: MutationObserver | null = null;
+
+  function watchPlayer(document: Document): void {
+    const shadow = document.querySelector("ytd-player")?.shadowRoot ?? null;
+    if (!shadow || shadow === watchedPlayer) return;
+    watchedPlayer = shadow;
+    playerWatch?.disconnect();
+    playerWatch = new MutationObserver(() => {
+      scanNow?.();
+    });
+    playerWatch.observe(shadow, { childList: true, subtree: true });
+  }
 
   function isAllowed(id: string): boolean {
     if (!id) return false;
     try {
-      return sessionStorage.getItem(allowKey(id)) === '1';
+      return sessionStorage.getItem(allowKey(id)) === "1";
     } catch {
       return false;
     }
@@ -87,20 +110,20 @@ export function createYouTubePage(): PageController {
     const id = mediaId(location);
     if (!id) return;
     try {
-      sessionStorage.setItem(allowKey(id), '1');
+      sessionStorage.setItem(allowKey(id), "1");
     } catch {
       /* private mode can block storage; the cover still closes for this scan */
     }
   }
 
   function removeCover(): void {
-    coverPhrase = '';
+    coverPhrase = "";
     cover?.remove();
     cover = null;
   }
 
   function pauseVideos(document: Document): void {
-    for (const video of document.querySelectorAll('video')) {
+    for (const video of document.querySelectorAll("video")) {
       if (isVideo(video)) video.pause();
     }
   }
@@ -109,8 +132,8 @@ export function createYouTubePage(): PageController {
     for (const selector of NEXT_SELECTORS) {
       const button = document.querySelector(selector);
       if (!button) continue;
-      if ('disabled' in button && button.disabled) continue;
-      if (button.getAttribute('aria-disabled') === 'true') continue;
+      if ("disabled" in button && button.disabled) continue;
+      if (button.getAttribute("aria-disabled") === "true") continue;
       if (button instanceof HTMLElement) button.click();
       return true;
     }
@@ -122,14 +145,18 @@ export function createYouTubePage(): PageController {
       history.back();
       return;
     }
-    location.assign('https://www.youtube.com/');
+    location.assign("https://www.youtube.com/");
   }
 
-  function playAnyway(document: Document, location: Location, scan: () => void): void {
+  function playAnyway(
+    document: Document,
+    location: Location,
+    scan: () => void,
+  ): void {
     allowCurrent(location);
     shortsSkipStreak = 0;
     removeCover();
-    for (const video of document.querySelectorAll('video')) {
+    for (const video of document.querySelectorAll("video")) {
       if (!isVideo(video)) continue;
       const pending = video.play();
       void pending.catch(() => undefined);
@@ -137,56 +164,61 @@ export function createYouTubePage(): PageController {
     scan();
   }
 
-  function showCover(document: Document, location: Location, phrase: string, scan: () => void): void {
+  function showCover(
+    document: Document,
+    location: Location,
+    phrase: string,
+    scan: () => void,
+  ): void {
     if (cover && coverPhrase === phrase) {
       pauseVideos(document);
       return;
     }
     removeCover();
     coverPhrase = phrase;
-    const dialog = document.createElement('div');
-    dialog.className = 'muty-cover muty-ui';
-    dialog.setAttribute('role', 'dialog');
-    dialog.setAttribute('aria-modal', 'true');
-    dialog.setAttribute('aria-labelledby', 'muty-cover-title');
+    const dialog = document.createElement("div");
+    dialog.className = "muty-cover muty-ui";
+    dialog.setAttribute("role", "dialog");
+    dialog.setAttribute("aria-modal", "true");
+    dialog.setAttribute("aria-labelledby", "muty-cover-title");
 
-    const sheet = document.createElement('div');
-    sheet.className = 'sheet';
-    const kicker = document.createElement('p');
-    kicker.className = 'kicker';
-    kicker.textContent = 'Muty';
-    const heading = document.createElement('h2');
-    heading.id = 'muty-cover-title';
+    const sheet = document.createElement("div");
+    sheet.className = "sheet";
+    const kicker = document.createElement("p");
+    kicker.className = "kicker";
+    kicker.textContent = "Muty";
+    const heading = document.createElement("h2");
+    heading.id = "muty-cover-title";
     heading.textContent = `This matches “${phrase}”.`;
-    const note = document.createElement('p');
-    note.className = 'note';
-    note.textContent = 'The picture stays covered so it doesn’t spoil anything.';
-    const actions = document.createElement('div');
-    actions.className = 'actions';
-    const play = document.createElement('button');
-    play.type = 'button';
-    play.className = 'primary';
-    play.textContent = 'Play it anyway';
-    play.addEventListener('click', () => {
+    const note = document.createElement("p");
+    note.className = "note";
+    note.textContent = "This is a content you blocked.";
+    const actions = document.createElement("div");
+    actions.className = "actions";
+    const play = document.createElement("button");
+    play.type = "button";
+    play.className = "primary";
+    play.textContent = "Play it anyway";
+    play.addEventListener("click", () => {
       playAnyway(document, location, scan);
     });
-    const leave = document.createElement('button');
-    leave.type = 'button';
-    leave.className = 'quiet';
-    leave.textContent = 'Not now';
-    leave.addEventListener('click', () => {
+    const leave = document.createElement("button");
+    leave.type = "button";
+    leave.className = "quiet";
+    leave.textContent = "Not now";
+    leave.addEventListener("click", () => {
       leavePage(location);
     });
     actions.append(play, leave);
     sheet.append(kicker, heading, note, actions);
     dialog.append(sheet);
-    dialog.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
         event.preventDefault();
         leavePage(location);
         return;
       }
-      if (event.key !== 'Tab') return;
+      if (event.key !== "Tab") return;
       const first = play;
       const last = leave;
       if (event.shiftKey && document.activeElement === first) {
@@ -197,7 +229,10 @@ export function createYouTubePage(): PageController {
         first.focus();
       }
     });
-    const host = document.fullscreenElement instanceof HTMLElement ? document.fullscreenElement : document.documentElement;
+    const host =
+      document.fullscreenElement instanceof HTMLElement
+        ? document.fullscreenElement
+        : document.documentElement;
     host.append(dialog);
     leave.focus();
     pauseVideos(document);
@@ -206,9 +241,13 @@ export function createYouTubePage(): PageController {
 
   function handleOpenVideo(input: PageScan): void {
     const kind = pageKind(input.location);
-    const wantsCover = kind === 'watch' && input.settings.coverWatch;
-    const wantsSkip = kind === 'shorts' && input.settings.skipShorts;
-    if (!input.filtering || input.settings.keywords.length === 0 || (!wantsCover && !wantsSkip)) {
+    const wantsCover = kind === "watch" && input.settings.coverWatch;
+    const wantsSkip = kind === "shorts" && input.settings.skipShorts;
+    if (
+      !input.filtering ||
+      input.settings.keywords.length === 0 ||
+      (!wantsCover && !wantsSkip)
+    ) {
       window.clearTimeout(skipTimer);
       removeCover();
       return;
@@ -230,7 +269,8 @@ export function createYouTubePage(): PageController {
       if (clickNext(input.document)) {
         window.clearTimeout(skipTimer);
         skipTimer = window.setTimeout(() => {
-          if (mediaId(input.location) === id) showCover(input.document, input.location, phrase, input.scan);
+          if (mediaId(input.location) === id)
+            showCover(input.document, input.location, phrase, input.scan);
         }, 900);
         return;
       }
@@ -240,8 +280,12 @@ export function createYouTubePage(): PageController {
 
   return {
     start(document) {
+      watchPlayer(document);
+      document.addEventListener("yt-navigate-finish", () => {
+        watchPlayer(document);
+      });
       document.addEventListener(
-        'play',
+        "play",
         (event) => {
           if (!coverPhrase) return;
           if (isVideo(event.target)) event.target.pause();
@@ -250,10 +294,13 @@ export function createYouTubePage(): PageController {
       );
     },
     onScan(input) {
+      scanNow = input.scan;
+      watchPlayer(input.document);
       handleOpenVideo(input);
     },
     onNavigate() {
-      lastSkippedId = '';
+      watchedPlayer = null;
+      lastSkippedId = "";
       window.clearTimeout(skipTimer);
       removeCover();
     },
