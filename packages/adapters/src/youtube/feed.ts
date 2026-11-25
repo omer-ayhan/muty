@@ -44,7 +44,8 @@ const CHANNEL_CARDS = new Set([
   'ytd-compact-channel-renderer',
 ]);
 
-const CARD_SELECTOR = [...OUTER_TAGS, ...LOOSE_TAGS].join(',');
+const END_SCREEN_SELECTOR = '.ytp-videowall-still, .ytp-modern-videowall-still, .ytp-ce-element';
+const CARD_SELECTOR = [...OUTER_TAGS, ...LOOSE_TAGS, END_SCREEN_SELECTOR].join(',');
 const SHELF_SELECTOR = [
   'ytd-rich-shelf-renderer',
   'ytd-reel-shelf-renderer',
@@ -65,6 +66,9 @@ const TITLE_SELECTORS = [
   '.yt-lockup-metadata-view-model__title',
   '#video-title',
   'a#video-title-link',
+  '.ytp-videowall-still-info-title',
+  '.ytp-modern-videowall-still-info-title',
+  '.ytp-ce-video-title',
   'h3.shortsLockupViewModelHostMetadataTitle',
   '.shortsLockupViewModelHostMetadataTitle',
   '.YtmCompactMediaItemHeadline',
@@ -217,10 +221,26 @@ function outermost(node: Element): Element {
   return best;
 }
 
+function cardsUnder(root: ParentNode, depth: number, into: Element[]): void {
+  if (depth > 5 || !('querySelectorAll' in root)) return;
+  for (const node of root.querySelectorAll(CARD_SELECTOR)) into.push(node);
+  for (const el of root.querySelectorAll('*')) {
+    if (!el.shadowRoot) continue;
+    cardsUnder(el.shadowRoot, depth + 1, into);
+  }
+}
+
 function targetsIn(root: ParentNode): Element[] {
   const seen = new Set<Element>();
   const targets: Element[] = [];
-  for (const node of root.querySelectorAll(CARD_SELECTOR)) {
+  const nodes: Element[] = [];
+  if ('querySelectorAll' in root) {
+    for (const node of root.querySelectorAll(CARD_SELECTOR)) nodes.push(node);
+    for (const host of root.querySelectorAll('ytd-player')) {
+      if (host.shadowRoot) cardsUnder(host.shadowRoot, 1, nodes);
+    }
+  }
+  for (const node of nodes) {
     if (isExempt(node)) continue;
     const target = outermost(node);
     if (seen.has(target) || isExempt(target)) continue;

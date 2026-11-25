@@ -58,12 +58,20 @@ export function setHidden(node: Element, hidden: boolean): void {
   }
 }
 
-export function clearMarks(root: ParentNode): void {
+function clearMarksIn(root: ParentNode, depth: number): void {
+  if (depth > 5 || !('querySelectorAll' in root)) return;
   for (const node of root.querySelectorAll(`.${HIDDEN_CLASS}, [data-sm-card]`)) {
     setHidden(node, false);
     node.removeAttribute('data-sm-card');
     node.removeAttribute('data-sm-phrase');
   }
+  for (const el of root.querySelectorAll('*')) {
+    if (el.shadowRoot) clearMarksIn(el.shadowRoot, depth + 1);
+  }
+}
+
+export function clearMarks(root: ParentNode): void {
+  clearMarksIn(root, 0);
 }
 
 export function applyFeed(
