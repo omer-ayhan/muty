@@ -1,0 +1,14 @@
+---
+description: Main only accepts a merge from development, and that merge is the release.
+alwaysApply: true
+---
+
+# Branches
+
+Do not push or commit straight to `main`.
+
+Feature work starts on a new branch. Open a pull request into `development`.
+
+A release is a pull request from `development` into `main` and nothing else. That merge is what publishes the Chrome package.
+
+Do not push unless the user asks.

@@ -2,6 +2,7 @@
 
 - Keep work on this repo local until asked to push or open a pull request.
 - Use Conventional Commits, one group per commit: `type(scope): imperative summary`.
+- Do not push or commit straight to `main`. Feature branches merge into `development` by pull request. Only `development` merges into `main`, and that merge is the release.
 - Hide matching content with `display: none`. Leave no grey blocked placeholder in its place.
 - Keep the hidden count on the toolbar badge and in the extension popup and details page. Do not add an in-page "N videos hidden / Show" pill.
 - Show a platform icon to the left of each provider name in the popup.
