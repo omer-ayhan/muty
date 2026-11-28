@@ -4,7 +4,7 @@ Muty hides videos and posts when their text matches a list you keep in your brow
 
 ## What Muty reads
 
-On YouTube, LinkedIn, X, Kick, and Twitch, Muty reads titles, descriptions, categories, and chat lines. When you turn on the name checks, it also reads YouTube channel names, LinkedIn names, and X account names. It uses that text only to decide which items to hide.
+On YouTube, LinkedIn, X, Kick, Twitch, and Reddit, Muty reads titles, descriptions, categories, and chat lines. On Reddit that is the post title, the post text, the subreddit name, and the comment. When you turn on the name checks, it also reads YouTube channel names, LinkedIn names, and X account names. Reddit usernames are not read. It uses that text only to decide which items to hide.
 
 ## What stays on your device
 
@@ -28,4 +28,4 @@ The use of information received from Google APIs will adhere to the [Chrome Web 
 
 Questions about this policy can go to the [Muty repository](https://github.com/omer-ayhan/muty).
 
-Last updated: November 23, 2026.
+Last updated: November 28, 2026.
