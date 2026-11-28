@@ -21,5 +21,13 @@ test('a url picks the matching adapter', () => {
   assert.equal(adapterFor('https://www.twitch.tv/directory/all')?.id, 'twitch');
   assert.equal(adapterFor('https://twitch.tv/caseoh_')?.id, 'twitch');
   assert.equal(adapterFor('https://www.twitch.com/')?.id, 'twitch');
+  assert.equal(adapterFor('https://www.reddit.com/r/games/')?.id, 'reddit');
+  assert.equal(adapterFor('https://reddit.com/r/all/')?.id, 'reddit');
+  assert.equal(adapterFor('https://old.reddit.com/r/games/comments/abc/title/')?.id, 'reddit');
+  assert.equal(adapterFor('https://new.reddit.com/')?.id, 'reddit');
+  assert.equal(adapterFor('https://np.reddit.com/r/games/')?.id, 'reddit');
+  assert.equal(adapterFor('https://sh.reddit.com/r/games/')?.id, 'reddit');
+  assert.equal(adapterFor('https://m.reddit.com/')?.id, 'reddit');
+  assert.equal(adapterFor('https://ads.reddit.com/'), null);
   assert.equal(adapterFor('https://example.com/'), null);
 });

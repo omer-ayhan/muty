@@ -3,7 +3,7 @@
   "name": "Muty — Hide Matching Videos and Posts",
   "short_name": "Muty",
   "version": "1.1.0",
-  "description": "Hide videos and posts on YouTube, LinkedIn, X, Kick, and Twitch when the title contains words you choose.",
+  "description": "Hide videos and posts on YouTube, LinkedIn, X, Kick, Twitch, and Reddit when the title contains words you choose.",
   "permissions": ["storage"],
   "host_permissions": [
     "https://www.youtube.com/*",
@@ -26,7 +26,14 @@
     "https://*.twitch.tv/*",
     "https://www.twitch.com/*",
     "https://twitch.com/*",
-    "https://*.twitch.com/*"
+    "https://*.twitch.com/*",
+    "https://www.reddit.com/*",
+    "https://reddit.com/*",
+    "https://old.reddit.com/*",
+    "https://new.reddit.com/*",
+    "https://np.reddit.com/*",
+    "https://sh.reddit.com/*",
+    "https://m.reddit.com/*"
   ],
   "action": {
     "default_title": "Muty",
@@ -69,7 +76,14 @@
         "https://*.twitch.tv/*",
         "https://www.twitch.com/*",
         "https://twitch.com/*",
-        "https://*.twitch.com/*"
+        "https://*.twitch.com/*",
+        "https://www.reddit.com/*",
+        "https://reddit.com/*",
+        "https://old.reddit.com/*",
+        "https://new.reddit.com/*",
+        "https://np.reddit.com/*",
+        "https://sh.reddit.com/*",
+        "https://m.reddit.com/*"
       ],
       "js": ["content.js"],
       "css": ["content.css"],

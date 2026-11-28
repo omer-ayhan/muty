@@ -14,6 +14,6 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test src/registry.test.ts src/youtube/cards.test.ts src/linkedin/feed.test.ts src/twitter/feed.test.ts src/kick/feed.test.ts src/twitch/feed.test.ts"
+    "test": "node --experimental-strip-types --test src/registry.test.ts src/youtube/cards.test.ts src/linkedin/feed.test.ts src/twitter/feed.test.ts src/kick/feed.test.ts src/twitch/feed.test.ts src/reddit/feed.test.ts"
   }
 }
